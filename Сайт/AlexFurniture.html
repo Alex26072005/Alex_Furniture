@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AlexFurniture</title>
+<style>
+:root{--primary:#FF6B35;--primary-dark:#E85520;--accent:#004E89;--accent-light:#1A7FBF;--mint:#06D6A0;--yellow:#FFD166;--bg:#FFF8F0;--text:#2B2D42;--gray:#8D99AE;--shadow:0 8px 24px rgba(0,0,0,0.08);--radius:16px}
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',Tahoma,sans-serif}
+body{background:var(--bg);color:var(--text);overflow-x:hidden}
+header{background:linear-gradient(135deg,#FFF8F0 0%,#FFE8D6 100%);position:sticky;top:0;z-index:100;padding:1rem 5%;display:flex;justify-content:space-between;align-items:center;box-shadow:0 2px 20px rgba(0,0,0,0.05)}
+.logo{font-size:1.6rem;font-weight:800;background:linear-gradient(135deg,var(--primary),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;cursor:pointer}
+.logo span{color:var(--primary);-webkit-text-fill-color:var(--primary)}
+.nav-icons{display:flex;gap:15px;align-items:center}
+.icon-btn{background:#fff;border:2px solid transparent;cursor:pointer;font-size:1rem;position:relative;display:flex;align-items:center;gap:6px;color:var(--text);padding:8px 14px;border-radius:30px;transition:all .3s;font-weight:600}
+.icon-btn:hover{border-color:var(--primary);color:var(--primary)}
+.badge{background:var(--primary);color:#fff;border-radius:50%;min-width:20px;height:20px;padding:0 6px;font-size:.7rem;display:flex;align-items:center;justify-content:center;position:absolute;top:-5px;right:-5px;font-weight:bold}
+.hero{background:linear-gradient(135deg,rgba(255,107,53,.9),rgba(0,78,137,.85)),url('https://images.unsplash.com/photo-1555041469-a586c61ea9bc?auto=format&fit=crop&w=1920&q=80');background-size:cover;background-position:center;padding:5rem 5%;text-align:center;color:#fff}
+.hero h1{font-size:3rem;margin-bottom:1rem;text-shadow:2px 4px 12px rgba(0,0,0,.3)}
+.hero p{font-size:1.2rem;margin-bottom:2rem}
+.hero-btn{background:#fff;color:var(--primary);border:none;padding:14px 32px;border-radius:40px;font-size:1rem;font-weight:700;cursor:pointer}
+.hero-btn:hover{transform:translateY(-3px) scale(1.05)}
+.section-title{text-align:center;font-size:2rem;font-weight:800;margin:3rem 0 1rem}
+.section-title span{color:var(--primary)}
+.section-sub{text-align:center;color:var(--gray);margin-bottom:2rem}
+.filters{padding:0 5%;margin-bottom:2rem;display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.filter-btn{padding:10px 24px;border:2px solid #FFE0D0;background:#fff;color:var(--text);border-radius:30px;cursor:pointer;font-weight:600}
+.filter-btn.active,.filter-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff}
+.catalog{padding:0 5% 3rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:2rem}
+.product-card{background:#fff;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);position:relative;display:flex;flex-direction:column;border:2px solid transparent}
+.product-card:hover{transform:translateY(-8px);border-color:#FFE0D0}
+.product-img{width:100%;height:220px;object-fit:cover;background:#eee}
+.product-info{padding:18px;display:flex;flex-direction:column;flex-grow:1}
+.product-title{font-weight:700;margin-bottom:8px;font-size:1.05rem}
+.product-price{color:var(--primary);font-weight:800;font-size:1.35rem;margin-bottom:15px}
+.add-to-cart{margin-top:auto;background:linear-gradient(135deg,var(--primary),#FF8C42);color:#fff;border:none;padding:12px;border-radius:10px;cursor:pointer;width:100%;font-weight:700}
+.add-to-cart:hover{background:var(--primary-dark)}
+.wishlist-btn{position:absolute;top:12px;right:12px;background:#fff;border:none;border-radius:50%;width:40px;height:40px;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:1.2rem;color:#ccc}
+.wishlist-btn.active{color:#FF3B6B}
+.helper{margin:3rem 5%;background:linear-gradient(135deg,#E8F7FF,#FFF0E6);border-radius:24px;padding:3rem 2rem;text-align:center;border:2px solid #FFE0D0}
+.helper h2{color:var(--accent);margin-bottom:1rem}
+.helper p{color:var(--gray);margin-bottom:1.5rem}
+.quiz-box{max-width:600px;margin:0 auto;background:#fff;padding:2rem;border-radius:var(--radius);box-shadow:var(--shadow)}
+.quiz-question{font-weight:700;margin-bottom:1rem;color:var(--accent)}
+.quiz-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1rem}
+.quiz-option{padding:12px;background:#FFF8F0;border:2px solid transparent;border-radius:10px;cursor:pointer;font-weight:600}
+.quiz-option:hover{border-color:var(--primary);background:#fff}
+.quiz-result{margin-top:1rem;padding:1rem;background:var(--mint);color:#fff;border-radius:10px;font-weight:700;display:none}
+.reviews-section{padding:3rem 5%;background:#FFF1E6}
+.reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1.5rem;margin-top:2rem}
+.review-card{background:#fff;padding:1.5rem;border-radius:var(--radius);box-shadow:var(--shadow);position:relative}
+.review-header{display:flex;align-items:center;gap:12px;margin-bottom:1rem}
+.review-avatar{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--yellow));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:1.2rem}
+.review-name{font-weight:700}
+.review-stars{color:var(--yellow);font-size:.9rem}
+.review-text{color:#555;line-height:1.6;font-style:italic}
+.add-review-box{max-width:600px;margin:2rem auto 0;background:#fff;padding:1.5rem;border-radius:var(--radius);box-shadow:var(--shadow)}
+.add-review-box input,.add-review-box textarea,.add-review-box select{width:100%;padding:10px;margin-bottom:10px;border:2px solid #FFE0D0;border-radius:8px;font-family:inherit}
+.add-review-box button{width:100%;padding:12px;background:var(--primary);color:#fff;border:none;border-radius:10px;font-weight:700;cursor:pointer}
+.contacts{padding:3rem 5%;background:linear-gradient(135deg,var(--accent),var(--accent-light));color:#fff}
+.contacts .section-title{color:#fff}
+.contacts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:2rem;max-width:1000px;margin:0 auto}
+.contact-card{text-align:center;padding:1.5rem;background:rgba(255,255,255,.1);border-radius:var(--radius);border:1px solid rgba(255,255,255,.2)}
+.contact-card:hover{background:rgba(255,255,255,.2)}
+.contact-icon{font-size:2rem;margin-bottom:10px;display:block}
+.contact-card h3{margin-bottom:8px;font-size:1rem}
+.contact-card a,.contact-card p{color:#E0F2FE;text-decoration:none;font-size:.95rem}
+.socials{display:flex;justify-content:center;gap:15px;margin-top:2rem}
+.social-btn{width:45px;height:45px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;color:#fff;text-decoration:none;font-size:1.2rem}
+.social-btn:hover{background:var(--yellow);color:var(--accent)}
+footer{text-align:center;padding:1.5rem;background:var(--text);color:#aaa;font-size:.85rem}
+.modal-overlay{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.6);display:none;justify-content:center;align-items:center;z-index:1000;padding:1rem}
+.modal-overlay.active{display:flex}
+.modal-content{background:#fff;padding:2rem;border-radius:var(--radius);width:100%;max-width:480px;max-height:85vh;overflow-y:auto;position:relative}
+.modal-content h2{color:var(--accent);margin-bottom:1rem}
+.close-modal{position:absolute;top:15px;right:20px;font-size:1.8rem;cursor:pointer;border:none;background:none;color:var(--gray)}
+.cart-item{display:flex;justify-content:space-between;align-items:center;border-bottom:2px solid #FFF1E6;padding:12px 0;gap:10px}
+.cart-item-info h4{margin-bottom:4px;font-size:.95rem}
+.cart-item-info span{color:var(--primary);font-weight:700}
+.cart-total{margin-top:20px;text-align:right;font-weight:800;font-size:1.3rem;color:var(--primary)}
+.qty-controls{display:flex;align-items:center}
+.qty-controls button{background:#FFE8D6;border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-weight:700;color:var(--primary)}
+.qty-controls span{margin:0 8px;font-weight:700}
+.auth-form input{width:100%;padding:12px;margin-bottom:12px;border:2px solid #FFE0D0;border-radius:8px}
+.auth-btn{width:100%;padding:13px;background:var(--primary);color:#fff;border:none;border-radius:10px;cursor:pointer;font-weight:700}
+.empty-msg{text-align:center;color:var(--gray);padding:2rem}
+.icon-img { width: 20px; height: 20px; object-fit: contain; vertical-align: middle; display: inline-block; }
+.icon-img-lg { width: 24px; height: 24px; object-fit: contain; vertical-align: middle; }
+.contact-icon img { width: 42px; height: 42px; object-fit: contain; display: block; margin: 0 auto 10px; }
+.empty-img { width: 48px; height: 48px; object-fit: contain; display: block; margin: 0 auto 10px; opacity: 0.7; }
+.wishlist-btn img { width: 22px; height: 22px; object-fit: contain; opacity: 0.5; transition: opacity 0.2s; }
+.wishlist-btn.active img { opacity: 1; }
+@media(max-width:768px){.hero h1{font-size:2rem}.section-title{font-size:1.5rem}.nav-icons .icon-btn span:not(.badge){display:none}.quiz-options{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">Alex<span>Furniture</span></div>
+<div class="nav-icons">
+<button class="icon-btn" onclick="openModal('authModal')"><img src="icons/user.png" alt="Профиль" class="icon-img"><span id="userNameDisplay">Войти</span></button>
+<button class="icon-btn" onclick="openModal('wishlistModal')"><img src="icons/heart.png" alt="Избранное" class="icon-img"><span class="badge" id="wishlistCount">0</span></button>
+<button class="icon-btn" onclick="openModal('cartModal')"><img src="icons/cart.png" alt="Корзина" class="icon-img"><span class="badge" id="cartCount">0</span></button>
+</div>
+</header>
+<section class="hero">
+<h1>Мебель, которая вдохновляет</h1>
+<p>Яркие решения для вашего дома. Доставка по всей России</p>
+<button class="hero-btn" onclick="document.getElementById('catalog').scrollIntoView({behavior:'smooth'})">Смотреть каталог →</button>
+</section>
+<h2 class="section-title" id="catalog">Наш <span>каталог</span></h2>
+<p class="section-sub">Выберите категорию и найдите идеальную мебель</p>
+<div class="filters">
+<button class="filter-btn active" onclick="filterProducts('all',event)">Все</button>
+<button class="filter-btn" onclick="filterProducts('sofa',event)">Диваны</button>
+<button class="filter-btn" onclick="filterProducts('table',event)">Столы</button>
+<button class="filter-btn" onclick="filterProducts('chair',event)">Стулья</button>
+<button class="filter-btn" onclick="filterProducts('bed',event)">Кровати</button>
+</div>
+<main class="catalog" id="productCatalog"></main>
+<section class="helper">
+<h2><img src="icons/quiz.png" alt="Квиз" class="icon-img-lg"> Поможем с выбором</h2>
+<p>Ответьте на 3 вопроса — и мы подскажем идеальную категорию</p>
+<div class="quiz-box">
+<div class="quiz-question" id="quizQuestion">Для какой комнаты ищете мебель?</div>
+<div class="quiz-options" id="quizOptions"></div>
+<div class="quiz-result" id="quizResult"></div>
+</div>
+</section>
+<section class="reviews-section">
+<h2 class="section-title">Отзывы наших <span>клиентов</span></h2>
+<p class="section-sub">Реальные истории от реальных покупателей</p>
+<div class="reviews-grid" id="reviewsGrid"></div>
+<div class="add-review-box">
+<h3 style="margin-bottom:1rem;color:var(--accent);">Оставить отзыв</h3>
+<input type="text" id="reviewName" placeholder="Ваше имя" maxlength="30">
+<select id="reviewRating">
+<option value="5">★★★★★ Отлично</option>
+<option value="4">★★★★ Хорошо</option>
+<option value="3">★★★ Нормально</option>
+<option value="2">★★ Плохо</option>
+<option value="1">★ Ужасно</option>
+</select>
+<textarea id="reviewText" rows="3" placeholder="Поделитесь впечатлениями..."></textarea>
+<button onclick="addReview()">Отправить отзыв</button>
+</div>
+</section>
+<section class="contacts" id="contacts">
+<h2 class="section-title">Свяжитесь с нами</h2>
+<p class="section-sub" style="color:#E0F2FE;">Мы всегда рады помочь</p>
+<div class="contacts-grid">
+<div class="contact-card"><span class="contact-icon"><img src="icons/phone.png" alt="Телефон"></span><h3>Телефон</h3><a href="tel:+79950745296">+7 (995) 074 52-96</a></div>
+<div class="contact-card"><span class="contact-icon"><img src="icons/mail.png" alt="Email"></span><h3>Email</h3><a href="mailto:hello@mebelshop.ru">AlexFurniture@gmail.com</a></div>
+<div class="contact-card"><span class="contact-icon"><img src="icons/pin.png" alt="Адрес"></span><h3>Адрес</h3><p>Красноярск, ул. Вильского, 16</p></div>
+<div class="contact-card"><span class="contact-icon"><img src="icons/clock.png" alt="Время"></span><h3>Часы работы</h3><p>Пн-Сб: 10:00 – 23:00</p></div>
+</div>
+<div class="socials">
+<div class="socials">
+    <a class="social-btn" href="#" title="Telegram"><img src="telegram.png" alt="Telegram" style="width: 24px; height: 24px;"></a>
+    <a class="social-btn" href="#" title="WhatsApp"><img src="whatsapp.png" alt="WhatsApp" style="width: 24px; height: 24px;"></a>
+    <a class="social-btn" href="#" title="VK"><img src="vk.png" alt="VK" style="width: 24px; height: 24px;"></a>
+    <a class="social-btn" href="#" title="Instagram"><img src="instagram.png" alt="Instagram" style="width: 24px; height: 24px;"></a>
+</div>
+</div>
+</section>
+<footer>© 2026-2027 AlexFurniture. Все права не защищены.</footer>
+<div class="modal-overlay" id="authModal">
+<div class="modal-content">
+<button class="close-modal" onclick="closeModal('authModal')">&times;</button>
+<h2 id="authTitle">Регистрация</h2>
+<form class="auth-form" id="authForm" onsubmit="handleAuth(event)">
+<input type="text" id="authName" placeholder="Ваше имя" required>
+<input type="email" id="authEmail" placeholder="Email" required>
+<input type="password" id="authPass" placeholder="Пароль" required>
+<button type="submit" class="auth-btn" id="authSubmitBtn">Зарегистрироваться</button>
+</form>
+<p style="margin-top:15px;text-align:center;font-size:.9rem;cursor:pointer;color:var(--accent);font-weight:600;" onclick="toggleAuthMode()">Уже есть аккаунт? <span style="text-decoration:underline;">Войти</span></p>
+</div>
+</div>
+<div class="modal-overlay" id="cartModal">
+<div class="modal-content">
+<button class="close-modal" onclick="closeModal('cartModal')">&times;</button>
+<h2><img src="icons/cart.png" alt="Корзина" class="icon-img-lg"> Корзина</h2>
+<div id="cartItems"></div>
+<div class="cart-total" id="cartTotal">Итого: 0 ₽</div>
+<button class="auth-btn" style="margin-top:20px;" onclick="checkout()">Оформить заказ</button>
+</div>
+</div>
+<div class="modal-overlay" id="wishlistModal">
+<div class="modal-content">
+<button class="close-modal" onclick="closeModal('wishlistModal')">&times;</button>
+<h2><img src="icons/heart.png" alt="Избранное" class="icon-img-lg"> Избранное</h2>
+<div id="wishlistItems"></div>
+</div>
+</div>
+<script>
+const products=[
+{id:1,title:"Кровать 'Комфорт'",price:45000,category:"sofa",img:"i4.webp"},
+{id:2,title:"Стол 'Обеденный'",price:12000,category:"table",img:"i6.webp"},
+{id:3,title:"Стул 'Венский'",price:3500,category:"chair",img:"i7.webp"},
+{id:4,title:"Кровать 'Сон'",price:25000,category:"bed",img:"i5.webp"},
+{id:5,title:"Диван 'Модерн'",price:55000,category:"sofa",img:"i.webp"},
+{id:6,title:"Черемша",price:999999999,category:"table",img:"cheremsha.gif"},
+{id:7,title:"Пуфик 'Уют'",price:18000,category:"chair",img:"i2.webp"},
+{id:8,title:"Кровать 'Дрим'",price:32000,category:"bed",img:"Krovatb_tecsturi.png"}
+];
+const defaultReviews=[
+{name:"Анна",rating:5,text:"Заказали диван Комфорт — в восторге! Доставили быстро, качество отличное."},
+{name:"Дмитрий",rating:5,text:"Стол прослужил уже год, выглядит как новый. Ребята помогли с выбором."},
+{name:"Мария",rating:4,text:"Стулья красивые, но ждала доставку чуть дольше, чем обещали."},
+{name:"Иван",rating:5,text:"Кровать — мечта! Спим как младенцы. Спасибо магазину."},
+{name:"Елена",rating:5,text:"Отличный сервис, приятные цены. Буду заказывать ещё!"}
+];
+let cart=JSON.parse(localStorage.getItem('cart'))||[];
+let wishlist=JSON.parse(localStorage.getItem('wishlist'))||[];
+let currentUser=JSON.parse(localStorage.getItem('user'))||null;
+let customReviews=JSON.parse(localStorage.getItem('customReviews'))||[];
+let isLoginMode=false;
+let quizStep=0,quizAnswers=[];
+const quizQuestions=[
+{q:"Для какой комнаты ищете мебель?",options:[{t:"Гостиная",v:"sofa"},{t:"Спальня",v:"bed"},{t:"Кухня",v:"table"},{t:"Кабинет",v:"chair"}]},
+{q:"Какой стиль вам ближе?",options:[{t:"Современный",v:"modern"},{t:"Классический",v:"classic"},{t:"Минимализм",v:"minimal"},{t:"Лофт",v:"loft"}]},
+{q:"Что важнее при выборе?",options:[{t:"Комфорт",v:"comfort"},{t:"Цена",v:"price"},{t:"Качество",v:"quality"},{t:"Дизайн",v:"design"}]}
+];
+document.addEventListener('DOMContentLoaded',()=>{
+renderProducts(products);renderReviews();updateUI();initQuiz();
+if(currentUser)document.getElementById('userNameDisplay').textContent=' '+currentUser.name;
+});
+function renderProducts(items){
+const c=document.getElementById('productCatalog');c.innerHTML='';
+if(items.length===0){c.innerHTML='<p style="text-align:center;grid-column:1/-1;">Товары не найдены.</p>';return;}
+items.forEach(p=>{
+const isW=wishlist.includes(p.id);
+const card=document.createElement('div');card.className='product-card';
+card.innerHTML='<img src="'+p.img+'" alt="'+p.title+'" class="product-img"><button class="wishlist-btn '+(isW?'active':'')+'" onclick="toggleWishlist('+p.id+')">♥</button><div class="product-info"><h3 class="product-title">'+p.title+'</h3><p class="product-price">'+p.price.toLocaleString()+' ₽</p><button class="add-to-cart" onclick="addToCart('+p.id+')">В корзину</button></div>';
+c.appendChild(card);
+});
+}
+function filterProducts(cat,e){
+document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+e.target.classList.add('active');
+if(cat==='all')renderProducts(products);
+else renderProducts(products.filter(p=>p.category===cat));
+}
+function addToCart(id){
+const p=products.find(x=>x.id===id);const ex=cart.find(i=>i.id===id);
+if(ex)ex.quantity+=1;else cart.push({...p,quantity:1});
+saveData();updateUI();
+}
+function removeFromCart(id){cart=cart.filter(i=>i.id!==id);saveData();updateUI();}
+function changeQty(id,d){
+const it=cart.find(i=>i.id===id);
+if(it){it.quantity+=d;if(it.quantity<=0)removeFromCart(id);else{saveData();updateUI();}}
+}
+function renderCart(){
+const c=document.getElementById('cartItems');const t=document.getElementById('cartTotal');c.innerHTML='';
+c.innerHTML='<p class="empty-msg"><img src="icons/sad.png" alt="Грустно" class="empty-img">Корзина пуста</p>';
+let total=0;
+cart.forEach(it=>{
+total+=it.price*it.quantity;
+const d=document.createElement('div');d.className='cart-item';
+d.innerHTML='<div class="cart-item-info"><h4>'+it.title+'</h4><span>'+it.price.toLocaleString()+' ₽</span></div><div class="qty-controls"><button onclick="changeQty('+it.id+',-1)">−</button><span>'+it.quantity+'</span><button onclick="changeQty('+it.id+',1)">+</button><button onclick="removeFromCart('+it.id+')" style="color:red;margin-left:10px;">✕</button></div>';
+c.appendChild(d);
+});
+t.textContent='Итого: '+total.toLocaleString()+' ₽';
+}
+function toggleWishlist(id){
+if(wishlist.includes(id))wishlist=wishlist.filter(w=>w!==id);else wishlist.push(id);
+saveData();updateUI();
+const af=document.querySelector('.filter-btn.active');
+if(af){
+const cat=af.textContent.trim();let f=products;
+if(cat==='Диваны')f=products.filter(p=>p.category==='sofa');
+else if(cat==='Столы')f=products.filter(p=>p.category==='table');
+else if(cat==='Стулья')f=products.filter(p=>p.category==='chair');
+else if(cat==='Кровати')f=products.filter(p=>p.category==='bed');
+renderProducts(f);
+}
+}
+function renderWishlist(){
+const c=document.getElementById('wishlistItems');c.innerHTML='';
+c.innerHTML='<p class="empty-msg"><img src="icons/sad.png" alt="Пусто" class="empty-img">Список желаемого пуст</p>';
+wishlist.forEach(id=>{
+const p=products.find(x=>x.id===id);
+if(p){
+const d=document.createElement('div');d.className='cart-item';
+d.innerHTML='<div class="cart-item-info"><h4>'+p.title+'</h4><span>'+p.price.toLocaleString()+' ₽</span></div><button onclick="toggleWishlist('+p.id+')" style="color:red;border:none;background:none;cursor:pointer;font-weight:600;">Удалить</button>';
+c.appendChild(d);
+}
+});
+}
+function updateUI(){
+document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.quantity,0);
+document.getElementById('wishlistCount').textContent=wishlist.length;
+renderCart();renderWishlist();
+}
+function openModal(id){document.getElementById(id).classList.add('active');}
+function closeModal(id){document.getElementById(id).classList.remove('active');}
+window.onclick=function(e){if(e.target.classList.contains('modal-overlay'))e.target.classList.remove('active');};
+function toggleAuthMode(){
+isLoginMode=!isLoginMode;
+document.getElementById('authTitle').textContent=isLoginMode?'Вход':'Регистрация';
+document.getElementById('authSubmitBtn').textContent=isLoginMode?'Войти':'Зарегистрироваться';
+}
+function handleAuth(e){
+e.preventDefault();
+const name=document.getElementById('authName').value;
+const email=document.getElementById('authEmail').value;
+currentUser={name,email};localStorage.setItem('user',JSON.stringify(currentUser));
+document.getElementById('userNameDisplay').textContent='👤 '+name;
+closeModal('authModal');
+alert(isLoginMode?'С возвращением, '+name+'!':'Аккаунт создан. Добро пожаловать, '+name+'!');
+document.getElementById('authForm').reset();
+}
+function checkout(){
+if(cart.length===0){alert('Корзина пуста!');return;}
+if(!currentUser){alert('Пожалуйста, войдите или зарегистрируйтесь.');closeModal('cartModal');openModal('authModal');return;}
+alert('Спасибо за заказ, '+currentUser.name+'! Сумма: '+document.getElementById('cartTotal').textContent);
+cart=[];saveData();updateUI();closeModal('cartModal');
+}
+function saveData(){
+localStorage.setItem('cart',JSON.stringify(cart));
+localStorage.setItem('wishlist',JSON.stringify(wishlist));
+localStorage.setItem('customReviews',JSON.stringify(customReviews));
+}
+function renderReviews(){
+const g=document.getElementById('reviewsGrid');g.innerHTML='';
+defaultReviews.forEach(r=>{
+const d=document.createElement('div');d.className='review-card';
+d.innerHTML='<div class="review-header"><div class="review-avatar">'+r.name.charAt(0).toUpperCase()+'</div><div><div class="review-name">'+r.name+'</div><div class="review-stars">'+'★'.repeat(r.rating)+'☆'.repeat(5-r.rating)+'</div></div></div><p class="review-text">"'+r.text+'"</p>';
+g.appendChild(d);
+});
+customReviews.forEach((r,i)=>{
+const d=document.createElement('div');d.className='review-card';
+d.innerHTML='<div class="review-header"><div class="review-avatar">'+r.name.charAt(0).toUpperCase()+'</div><div><div class="review-name">'+r.name+' <span style="font-size:.7rem;color:#06D6A0;font-weight:600;">(ваш)</span></div><div class="review-stars">'+'★'.repeat(r.rating)+'☆'.repeat(5-r.rating)+'</div></div></div><p class="review-text">"'+r.text+'"</p><button onclick="deleteReview('+i+')" style="margin-top:10px;background:#FFE8D6;color:#E85520;border:none;padding:6px 14px;border-radius:8px;cursor:pointer;font-weight:600;font-size:.85rem;">🗑 Удалить</button>';
+g.appendChild(d);
+});
+}
+function addReview(){
+const name=document.getElementById('reviewName').value.trim();
+const text=document.getElementById('reviewText').value.trim();
+const rating=parseInt(document.getElementById('reviewRating').value);
+if(!name||!text){alert('Заполните имя и текст отзыва');return;}
+customReviews.push({name,text,rating});saveData();renderReviews();
+document.getElementById('reviewName').value='';
+document.getElementById('reviewText').value='';
+alert('Спасибо за ваш отзыв!');
+}
+function deleteReview(index){
+if(!confirm('Удалить этот отзыв?'))return;
+customReviews.splice(index,1);saveData();renderReviews();
+}
+function initQuiz(){quizStep=0;quizAnswers=[];renderQuizStep();}
+function renderQuizStep(){
+const q=quizQuestions[quizStep];
+document.getElementById('quizQuestion').textContent=q.q;
+const o=document.getElementById('quizOptions');o.innerHTML='';
+q.options.forEach(op=>{
+const b=document.createElement('button');b.className='quiz-option';b.textContent=op.t;
+b.onclick=()=>{quizAnswers.push(op.v);quizStep++;if(quizStep<quizQuestions.length)renderQuizStep();else showQuizResult();};
+o.appendChild(b);
+});
+}
+function showQuizResult(){
+document.getElementById('quizOptions').innerHTML='';
+document.getElementById('quizQuestion').textContent='Готово!';
+const room=quizAnswers[0];let rec='';
+if(room==='sofa')rec='Диван';else if(room==='bed')rec='Кровать';
+else if(room==='table')rec='Стол';else rec='Кресло или стул';
+const r=document.getElementById('quizResult');
+r.style.display='block';
+r.innerHTML='Вам подойдёт: <b>'+rec+'</b> 🎉<br><button onclick="initQuiz()" style="margin-top:10px;background:#fff;color:#004E89;border:none;padding:8px 16px;border-radius:8px;cursor:pointer;font-weight:700;">Пройти заново</button>';
+}
+</script>
+</body>
+</html>
